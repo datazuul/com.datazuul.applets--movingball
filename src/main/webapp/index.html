@@ -1,0 +1,64 @@
+<html>
+<body>
+<h2>Game Applet: Moving Ball</h2>
+<p>The ball is moving horizontally across the applet!</p>
+<table>
+  <tr>
+	<td>Using APPLET-tag:<br/>
+	<applet archive="movingball.jar"
+	code="com/datazuul/applets/games/movingball/MovingBall.class"
+	width="300" height="300"></applet></td>
+
+	<td>Using OBJECT-tag:<br/>
+	<OBJECT type="application/x-java-applet" id="MovingBallApplet"
+	width="300" height="300" archive="movingball.jar" codebase="./"
+	code="com/datazuul/applets/games/movingball/MovingBall.class">
+</OBJECT></td>
+  </tr>
+
+  <tr>
+    <td>Using DoubleBuffering:<br/>
+    <OBJECT type="application/x-java-applet" id="MovingBallDoubleBufferedApplet"
+	width="300" height="300" archive="movingball.jar" codebase="./"
+	code="com/datazuul/applets/games/movingball/MovingBallDoubleBuffered.class">
+</OBJECT></td>
+  </tr>
+
+  <tr>
+    <td>Bouncing Ball:<br/>
+    <OBJECT type="application/x-java-applet" id="MovingBallReverseApplet"
+	width="300" height="300" archive="movingball.jar" codebase="./"
+	code="com/datazuul/applets/games/movingball/MovingBallReverse.class">
+</OBJECT></td>
+
+    <td>Ball beamed:<br/>
+    <OBJECT type="application/x-java-applet" id="MovingBallBeamingApplet"
+	width="300" height="300" archive="movingball.jar" codebase="./"
+	code="com/datazuul/applets/games/movingball/MovingBallBeaming.class">
+</OBJECT></td>
+
+<td>Bouncing Ball with sound:<br/>
+    <OBJECT type="application/x-java-applet" id="MovingBallSoundApplet"
+	width="300" height="300" archive="movingball.jar" codebase="./"
+	code="com/datazuul/applets/games/movingball/MovingBallSound.class">
+</OBJECT></td>
+  </tr>
+
+  <tr>
+    <td>Bouncing Ball with landscape image:<br/>
+    <OBJECT type="application/x-java-applet" id="MovingBallPictureApplet"
+	width="300" height="300" archive="movingball.jar" codebase="./"
+	code="com/datazuul/applets/games/movingball/MovingBallPicture.class">
+</OBJECT></td>
+  </tr>
+
+  <tr>
+    <td>Eventhandling (mouse and keyboard):<br/>
+    <OBJECT type="application/x-java-applet" id="MouseKeyListenerApplet"
+	width="300" height="300" archive="movingball.jar" codebase="./"
+	code="com/datazuul/applets/basics/events/MouseKeyListener.class">
+</OBJECT></td>
+  </tr>
+</table>
+</body>
+</html>
