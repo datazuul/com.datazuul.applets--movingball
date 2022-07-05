@@ -1,39 +1,38 @@
 package com.datazuul.applets.games.shootball;
 
 /**
- * Die Klasse Player verwaltet die Variablen, die die Punkte und die Leben des
- * Spielers ausmachen. Ebenso verfügt sie über Methoden mit denen Punkte und
- * Leben abgezogen bzw. hinzugefügt werden können
+ * Die Klasse Player verwaltet die Variablen, die die Punkte und die Leben des Spielers ausmachen. Ebenso verfÃ¼gt sie
+ * Ã¼ber Methoden mit denen Punkte und Leben abgezogen bzw. hinzugefÃ¼gt werden kÃ¶nnen
  */
-
 public class Player {
-	// Deklaration der Variablen
-	private int score; // Punkte des Spielers
-	private int lives; // Leben des Spielers
+  // Deklaration der Variablen
 
-	/* Konstruktor */
-	public Player() {
-		lives = 10;
-		score = 0;
-	}
+  private int score; // Punkte des Spielers
+  private int lives; // Leben des Spielers
 
-	/* Liefert die Punkte zurück */
-	public int getScore() {
-		return score;
-	}
+  /* Konstruktor */
+  public Player() {
+    lives = 10;
+    score = 0;
+  }
 
-	/* Liefert die Leben zurück */
-	public int getLives() {
-		return lives;
-	}
+  /* Liefert die Punkte zurÃ¼ck */
+  public int getScore() {
+    return score;
+  }
 
-	/* Fügt Punkte hinzu */
-	public void addScore(int plus) {
-		score += plus;
-	}
+  /* Liefert die Leben zurÃ¼ck */
+  public int getLives() {
+    return lives;
+  }
 
-	/* zieht Leben ab */
-	public void looseLife() {
-		lives--;
-	}
+  /* FÃ¼gt Punkte hinzu */
+  public void addScore(int plus) {
+    score += plus;
+  }
+
+  /* zieht Leben ab */
+  public void looseLife() {
+    lives--;
+  }
 }

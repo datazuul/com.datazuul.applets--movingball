@@ -15,118 +15,118 @@ import java.awt.event.MouseMotionListener;
  *
  */
 public class MouseKeyListener extends Applet implements Runnable, KeyListener,
-		MouseListener, MouseMotionListener {
-	private int speed;
+	MouseListener, MouseMotionListener {
 
-	int currentLine;
+  private int speed;
 
-	// Spielthread
-	private Thread th;
+  int currentLine;
 
-	// Variablen für die Doppelpufferung
-	private Image dbImage;
-	private Graphics dbg;
+  // Spielthread
+  private Thread th;
 
-	public void init() {
-		setBackground(Color.gray);
-		currentLine = 10;
-		addKeyListener(this);
-		addMouseListener(this);
-		addMouseMotionListener(this);
-	}
+  // Variablen fÃ¼r die Doppelpufferung
+  private Image dbImage;
+  private Graphics dbg;
 
-	public void start() {
-		// Schaffen eines neuen Threads, in dem das Spiel läuft
-		th = new Thread(this);
-		// Starten des Threads
-		th.start();
-	}
+  public void init() {
+    setBackground(Color.gray);
+    currentLine = 10;
+    addKeyListener(this);
+    addMouseListener(this);
+    addMouseMotionListener(this);
+  }
 
-	public void stop() {
-		// Thread stoppen
-		th.stop();
-		// Thread auf null setzen
-		th = null;
-	}
+  public void start() {
+    // Schaffen eines neuen Threads, in dem das Spiel lÃ¤uft
+    th = new Thread(this);
+    // Starten des Threads
+    th.start();
+  }
 
-	public void keyPressed(KeyEvent e) {
-		getGraphics().drawString("User pressed key " + e.getKeyChar(), 10,
-				currentLine);
-		currentLine += 20;
-	}
+  public void stop() {
+    // Thread stoppen
+    th.stop();
+    // Thread auf null setzen
+    th = null;
+  }
 
-	public void keyReleased(KeyEvent e) {
-		getGraphics().drawString("User released key " + e.getKeyChar(), 10,
-				currentLine);
-		currentLine += 20;
-	}
+  public void keyPressed(KeyEvent e) {
+    getGraphics().drawString("User pressed key " + e.getKeyChar(), 10,
+	    currentLine);
+    currentLine += 20;
+  }
 
-	public void keyTyped(KeyEvent e) {
-	}
+  public void keyReleased(KeyEvent e) {
+    getGraphics().drawString("User released key " + e.getKeyChar(), 10,
+	    currentLine);
+    currentLine += 20;
+  }
 
-	public void mouseClicked(MouseEvent e) {
-		getGraphics().drawString(
-				"User clicked mouse " + e.getClickCount() + " times!", 10,
-				currentLine);
-		currentLine += 20;
-	}
+  public void keyTyped(KeyEvent e) {
+  }
 
-	public void mouseEntered(MouseEvent e) {
-		getGraphics().drawString(
-				"Mouse entered applet at " + e.getX() + " " + e.getY(), 10,
-				currentLine);
-		currentLine += 20;
-	}
+  public void mouseClicked(MouseEvent e) {
+    getGraphics().drawString(
+	    "User clicked mouse " + e.getClickCount() + " times!", 10,
+	    currentLine);
+    currentLine += 20;
+  }
 
-	public void mouseExited(MouseEvent e) {
-	}
+  public void mouseEntered(MouseEvent e) {
+    getGraphics().drawString(
+	    "Mouse entered applet at " + e.getX() + " " + e.getY(), 10,
+	    currentLine);
+    currentLine += 20;
+  }
 
-	public void mousePressed(MouseEvent e) {
-	}
+  public void mouseExited(MouseEvent e) {
+  }
 
-	public void mouseReleased(MouseEvent e) {
-	}
+  public void mousePressed(MouseEvent e) {
+  }
 
-	public void mouseMoved(MouseEvent e) {
-	}
+  public void mouseReleased(MouseEvent e) {
+  }
 
-	public void mouseDragged(MouseEvent e) {
-	}
+  public void mouseMoved(MouseEvent e) {
+  }
 
-	public void run() {
-		// Erniedrigen der ThreadPriority um zeichnen zu erleichtern
-		Thread.currentThread().setPriority(Thread.MIN_PRIORITY);
+  public void mouseDragged(MouseEvent e) {
+  }
 
-		// Solange true ist läuft der Thread weiter
-		while (true) {
-			try {
-				paint(getGraphics());
+  public void run() {
+    // Erniedrigen der ThreadPriority um zeichnen zu erleichtern
+    Thread.currentThread().setPriority(Thread.MIN_PRIORITY);
 
-				// Stoppen des Threads für in Klammern angegebene Millisekunden
-				Thread.sleep(speed);
-			} catch (InterruptedException ex) {
-				// do nothing
-			}
+    // Solange true ist lÃ¤uft der Thread weiter
+    while (true) {
+      try {
+	paint(getGraphics());
 
-			// Zurücksetzen der ThreadPriority auf Maximalwert
-			Thread.currentThread().setPriority(Thread.MAX_PRIORITY);
-		}
-	}
+	// Stoppen des Threads fÃ¼r in Klammern angegebene Millisekunden
+	Thread.sleep(speed);
+      } catch (InterruptedException ex) {
+	// do nothing
+      }
 
-	/**
-	 * Update - Methode, Realisierung der Doppelpufferung zur Reduzierung des
-	 * Bildschirmflackerns
-	 */
-	public void update(Graphics g) {
-		// no double buffering
-	}
+      // ZurÃ¼cksetzen der ThreadPriority auf Maximalwert
+      Thread.currentThread().setPriority(Thread.MAX_PRIORITY);
+    }
+  }
 
-	public void paint(Graphics g) {
-		if (currentLine > 380) {
-			g.setColor(Color.blue);
-			g.fillRect(0, 0, 300, 300);
-			currentLine = 10;
-		}
-		g.setColor(Color.yellow);
-	}
+  /**
+   * Update - Methode, Realisierung der Doppelpufferung zur Reduzierung des Bildschirmflackerns
+   */
+  public void update(Graphics g) {
+    // no double buffering
+  }
+
+  public void paint(Graphics g) {
+    if (currentLine > 380) {
+      g.setColor(Color.blue);
+      g.fillRect(0, 0, 300, 300);
+      currentLine = 10;
+    }
+    g.setColor(Color.yellow);
+  }
 }

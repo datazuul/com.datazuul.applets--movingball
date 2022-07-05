@@ -6,196 +6,192 @@ import java.awt.Graphics;
 import java.util.Random;
 
 public class Ball {
-	/**
-	 * Diese Klasse enthält alle Funktionen, die für die Bewegung, Konstruktion,
-	 * Positionsbestimmung, Graphik und Abschiesen des Ball - Objektes von
-	 * Bedeutung sind.
-	 */
 
-	// Deklaration der Variablen
-	private int pos_x; // Variable für die X - Position des Balles
-	private int pos_y; // Variable für die Y - Position des Balles
-	private int x_speed; // Geschwindigkeit in x - Richtung
-	private int y_speed; // Geschwindigkeit in y - Richtung
-	private int radius; // Radius des Balles
+  /**
+   * Diese Klasse enthÃ¤lt alle Funktionen, die fï¿½r die Bewegung, Konstruktion, Positionsbestimmung, Graphik und
+   * Abschiesen des Ball - Objektes von Bedeutung sind.
+   */
 
-	private int first_x; // Start x - Position
-	private int first_y; // Start y - Position
+  // Deklaration der Variablen
+  private int pos_x; // Variable fÃ¼r die X - Position des Balles
+  private int pos_y; // Variable fÃ¼r die Y - Position des Balles
+  private int x_speed; // Geschwindigkeit in x - Richtung
+  private int y_speed; // Geschwindigkeit in y - Richtung
+  private int radius; // Radius des Balles
 
-	private int maxspeed; // Gibt den Maximalen Speed des Balles an
+  private int first_x; // Start x - Position
+  private int first_y; // Start y - Position
 
-	// Deklaration der Konstanten (Grenzen des Applets bei einer Gesamtgröße von
-	// 380 x 380)
-	private final int x_leftout = 10;
-	private final int x_rightout = 370;
-	private final int y_upout = 45;
-	private final int y_downout = 370;
+  private int maxspeed; // Gibt den Maximalen Speed des Balles an
 
-	// Farbe des Balles
-	Color color;
+  // Deklaration der Konstanten (Grenzen des Applets bei einer GesamtgrÃ¶ÃŸe von
+  // 380 x 380)
+  private final int x_leftout = 10;
+  private final int x_rightout = 370;
+  private final int y_upout = 45;
+  private final int y_downout = 370;
 
-	// AudioClip out
-	AudioClip out;
+  // Farbe des Balles
+  Color color;
 
-	// Refferenz auf das Playerobjekt des Spiels
-	Player player;
+  // AudioClip out
+  AudioClip out;
 
-	// Erzeugen des zum Erzeugen von Zufallszahlen nötigen Objektes
-	Random rnd = new Random();
+  // Refferenz auf das Playerobjekt des Spiels
+  Player player;
 
-	// Construktor
-	public Ball(int radius, int x, int y, int vx, int vy, int ms, Color color,
-			AudioClip out, Player player) {
-		// Initialisierung der Variablen
-		this.radius = radius;
+  // Erzeugen des zum Erzeugen von Zufallszahlen nÃ¶tigen Objektes
+  Random rnd = new Random();
 
-		pos_x = x;
-		pos_y = y;
+  // Construktor
+  public Ball(int radius, int x, int y, int vx, int vy, int ms, Color color,
+	  AudioClip out, Player player) {
+    // Initialisierung der Variablen
+    this.radius = radius;
 
-		first_x = x;
-		first_y = y;
+    pos_x = x;
+    pos_y = y;
 
-		x_speed = vx;
-		y_speed = vy;
+    first_x = x;
+    first_y = y;
 
-		maxspeed = ms;
+    x_speed = vx;
+    y_speed = vy;
 
-		this.color = color;
+    maxspeed = ms;
 
-		this.out = out;
+    this.color = color;
 
-		this.player = player;
+    this.out = out;
 
-	}
+    this.player = player;
 
-	// Move - Methode, berechnet die Bewegung des Balls
-	public void move() {
-		pos_x += x_speed;
-		pos_y += y_speed;
-		isOut();
-	}
+  }
 
-	/**
-	 * Methode wird nach einem Treffer des Balls aufgerufen, dabei wird x und y
-	 * übergeben um Ball an die Ausgangsposition zurückzusetzten
-	 */
-	public void ballWasHit() {
-		// Zurücksetzen der Position
-		pos_x = first_x;
-		pos_y = first_y;
+  // Move - Methode, berechnet die Bewegung des Balls
+  public void move() {
+    pos_x += x_speed;
+    pos_y += y_speed;
+    isOut();
+  }
 
-		// Bestimmung einer neuen Flugrichtung in x - Richtung per Zufall
-		x_speed = (rnd.nextInt()) % maxspeed;
-	}
+  /**
+   * Methode wird nach einem Treffer des Balls aufgerufen, dabei wird x und y Ã¼bergeben um Ball an die Ausgangsposition
+   * zurÃ¼ckzusetzen
+   */
+  public void ballWasHit() {
+    // ZurÃ¼cksetzen der Position
+    pos_x = first_x;
+    pos_y = first_y;
 
-	/**
-	 * Methode zur Berechnung, ob der Ball getroffen werden konnte oder nicht.
-	 * Dies wird mit Hilfe des Skalarproduktes berechnet. Hierbei wird zunächst
-	 * der Abstandsvektor zwischen Ball und Mausereigniss und dann seine Länge
-	 * bestimmt. Ist diese kleiner als 15, dann gilt der Ball als getroffen und
-	 * true wid als Argument übergeben. Ansonsten ist der Wert der Funktion
-	 * false
-	 */
-	public boolean userHit(int maus_x, int maus_y) {
-		// Bestimmen der Verbindungsvektoren
-		double x = maus_x - pos_x;
-		double y = maus_y - pos_y;
+    // Bestimmung einer neuen Flugrichtung in x - Richtung per Zufall
+    x_speed = (rnd.nextInt()) % maxspeed;
+  }
 
-		// Berechnen der Distanz
-		double distance = Math.sqrt((x * x) + (y * y));
+  /**
+   * Methode zur Berechnung, ob der Ball getroffen werden konnte oder nicht. Dies wird mit Hilfe des Skalarproduktes
+   * berechnet. Hierbei wird zunÃ¤chst der Abstandsvektor zwischen Ball und Mausereigniss und dann seine LÃ¤nge bestimmt.
+   * Ist diese kleiner als 15, dann gilt der Ball als getroffen und true wid als Argument Ã¼bergeben. Ansonsten ist der
+   * Wert der Funktion false
+   */
+  public boolean userHit(int maus_x, int maus_y) {
+    // Bestimmen der Verbindungsvektoren
+    double x = maus_x - pos_x;
+    double y = maus_y - pos_y;
 
-		// Wenn Distanz kleiner als 15 gilt Ball als getroffen
-		if (distance < 15) {
-			player.addScore(10 * Math.abs(x_speed) + 10);
-			return true;
-		} else
-			return false;
-	}
+    // Berechnen der Distanz
+    double distance = Math.sqrt((x * x) + (y * y));
 
-	/**
-	 * Test ob sich der Ball im Aus befindet, wird von Main in jedem
-	 * Threaddurchlauf aufgerufen
-	 */
-	private boolean isOut() {
-		// Ball im Linken Aus
-		if (pos_x < x_leftout) {
-			// Setzen der x - Position
-			pos_x = first_x;
-			pos_y = first_y;
+    // Wenn Distanz kleiner als 15 gilt Ball als getroffen
+    if (distance < 15) {
+      player.addScore(10 * Math.abs(x_speed) + 10);
+      return true;
+    } else {
+      return false;
+    }
+  }
 
-			// Abspielen des Audioclips
-			out.play();
+  /**
+   * Test ob sich der Ball im Aus befindet, wird von Main in jedem Threaddurchlauf aufgerufen
+   */
+  private boolean isOut() {
+    // Ball im Linken Aus
+    if (pos_x < x_leftout) {
+      // Setzen der x - Position
+      pos_x = first_x;
+      pos_y = first_y;
 
-			// Neue Flugrichtung
-			x_speed = (rnd.nextInt()) % maxspeed;
+      // Abspielen des Audioclips
+      out.play();
 
-			// Leben verlieren
-			player.looseLife();
+      // Neue Flugrichtung
+      x_speed = (rnd.nextInt()) % maxspeed;
 
-			// Rückgabewert
-			return true;
-		}
-		// Ball im rechten Aus
-		else if (pos_x > x_rightout) {
-			// Setzen der x - Position
-			pos_x = first_x;
-			pos_y = first_y;
+      // Leben verlieren
+      player.looseLife();
 
-			// Abspielen des Audioclips
-			out.play();
+      // RÃ¼ckgabewert
+      return true;
+    } // Ball im rechten Aus
+    else if (pos_x > x_rightout) {
+      // Setzen der x - Position
+      pos_x = first_x;
+      pos_y = first_y;
 
-			// Neue Flugrichtung
-			x_speed = (rnd.nextInt()) % maxspeed;
+      // Abspielen des Audioclips
+      out.play();
 
-			// Leben verlieren
-			player.looseLife();
+      // Neue Flugrichtung
+      x_speed = (rnd.nextInt()) % maxspeed;
 
-			// Rückgabewert
-			return true;
-		}
-		// Ball im oberen Aus
-		else if (pos_y < y_upout) {
-			// Setzen der x - Position
-			pos_x = first_x;
-			pos_y = first_y;
+      // Leben verlieren
+      player.looseLife();
 
-			// Abspielen des Audioclips
-			out.play();
+      // RÃ¼ckgabewert
+      return true;
+    } // Ball im oberen Aus
+    else if (pos_y < y_upout) {
+      // Setzen der x - Position
+      pos_x = first_x;
+      pos_y = first_y;
 
-			// Neue Flugrichtung
-			x_speed = (rnd.nextInt()) % maxspeed;
+      // Abspielen des Audioclips
+      out.play();
 
-			// Leben verlieren
-			player.looseLife();
+      // Neue Flugrichtung
+      x_speed = (rnd.nextInt()) % maxspeed;
 
-			// Rückgabewert
-			return true;
-		}
-		// Ball im unteren Aus
-		else if (pos_y > y_downout) {
-			// Setzen der x - Position
-			pos_x = first_x;
-			pos_y = first_y;
+      // Leben verlieren
+      player.looseLife();
 
-			// Abspielen des Audioclips
-			out.play();
+      // RÃ¼ckgabewert
+      return true;
+    } // Ball im unteren Aus
+    else if (pos_y > y_downout) {
+      // Setzen der x - Position
+      pos_x = first_x;
+      pos_y = first_y;
 
-			// Neue Flugrichtung
-			x_speed = (rnd.nextInt()) % maxspeed;
+      // Abspielen des Audioclips
+      out.play();
 
-			// Leben verlieren
-			player.looseLife();
+      // Neue Flugrichtung
+      x_speed = (rnd.nextInt()) % maxspeed;
 
-			// Rückgabewert
-			return true;
-		} else
-			return false;
-	}
+      // Leben verlieren
+      player.looseLife();
 
-	// Diese Methode zeichnet den Ball in das Spielfeld
-	public void DrawBall(Graphics g) {
-		g.setColor(color);
-		g.fillOval(pos_x - radius, pos_y - radius, 2 * radius, 2 * radius);
-	}
+      // RÃ¼ckgabewert
+      return true;
+    } else {
+      return false;
+    }
+  }
+
+  // Diese Methode zeichnet den Ball in das Spielfeld
+  public void DrawBall(Graphics g) {
+    g.setColor(color);
+    g.fillOval(pos_x - radius, pos_y - radius, 2 * radius, 2 * radius);
+  }
 
 }

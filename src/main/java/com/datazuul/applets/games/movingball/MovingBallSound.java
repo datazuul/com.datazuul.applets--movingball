@@ -12,114 +12,113 @@ import java.awt.Image;
  * @see http://www.javacooperation.gmxhome.de/SoundinAppletsEng.html
  */
 public class MovingBallSound extends Applet implements Runnable {
-	// Initialisierung der Variablen
-	int x_pos = 30; // x - Position des Balles
-	int y_pos = 100; // y - Position des Balles
-	int x_speed = 1; // Geschwindigkeit des Balles in x - Richtung
-	int radius = 20; // Radius des Balles
-	int appletsize_x = 300; // Größe des Applets in x - Richtung
-	int appletsize_y = 300; // Größe des Applets in y - Richtung
+  // Initialisierung der Variablen
 
-	// Variablen für die Doppelpufferung
-	private Image dbImage;
-	private Graphics dbg;
+  int x_pos = 30; // x - Position des Balles
+  int y_pos = 100; // y - Position des Balles
+  int x_speed = 1; // Geschwindigkeit des Balles in x - Richtung
+  int radius = 20; // Radius des Balles
+  int appletsize_x = 300; // Größe des Applets in x - Richtung
+  int appletsize_y = 300; // Größe des Applets in y - Richtung
 
-	// Thread
-	Thread th;
+  // Variablen für die Doppelpufferung
+  private Image dbImage;
+  private Graphics dbg;
 
-	// Instanzvariable für den AudioClip
-	AudioClip bounce;
+  // Thread
+  Thread th;
 
-	public void init() {
-		setBackground(Color.blue);
+  // Instanzvariable für den AudioClip
+  AudioClip bounce;
 
-		// Laden des Audioclips
-		bounce = getAudioClip(getCodeBase(), "bounce.au");
-	}
+  public void init() {
+    setBackground(Color.blue);
 
-	public void start() {
-		// Schaffen eines neuen Threads, in dem das Spiel läuft
-		th = new Thread(this);
-		// Starten des Threads
-		th.start();
-	}
+    // Laden des Audioclips
+    bounce = getAudioClip(getCodeBase(), "bounce.au");
+  }
 
-	public void stop() {
-		th.stop();
-	}
+  public void start() {
+    // Schaffen eines neuen Threads, in dem das Spiel läuft
+    th = new Thread(this);
+    // Starten des Threads
+    th.start();
+  }
 
-	public void destroy() {
-		th.stop();
-	}
+  public void stop() {
+    th.stop();
+  }
 
-	public void run() {
-		// Erniedrigen der ThreadPriority um zeichnen zu erleichtern
-		Thread.currentThread().setPriority(Thread.MIN_PRIORITY);
+  public void destroy() {
+    th.stop();
+  }
 
-		// Solange true ist läuft der Thread weiter
-		while (true) {
-			// Wenn der Ball den rechten Rand berührt, dann prallt er ab
-			if (x_pos > appletsize_x - radius) {
-				// Ändern der Richtung des Balles
-				x_speed = -1;
+  public void run() {
+    // Erniedrigen der ThreadPriority um zeichnen zu erleichtern
+    Thread.currentThread().setPriority(Thread.MIN_PRIORITY);
 
-				// Abspielen des AudioClips
-				bounce.play();
-			}
-			// Ball berührt linken Rand und prallt ab
-			else if (x_pos < radius) {
-				// Ändern der Richtung des Balles
-				x_speed = +1;
+    // Solange true ist läuft der Thread weiter
+    while (true) {
+      // Wenn der Ball den rechten Rand berührt, dann prallt er ab
+      if (x_pos > appletsize_x - radius) {
+	// Ändern der Richtung des Balles
+	x_speed = -1;
 
-				// Abspielen des AudioClips
-				bounce.play();
-			}
+	// Abspielen des AudioClips
+	bounce.play();
+      } // Ball berührt linken Rand und prallt ab
+      else if (x_pos < radius) {
+	// Ändern der Richtung des Balles
+	x_speed = +1;
 
-			// Verändern der x- Koordinate
-			x_pos += x_speed;
+	// Abspielen des AudioClips
+	bounce.play();
+      }
 
-			// Neuzeichnen des Applets
-			repaint();
+      // Verändern der x- Koordinate
+      x_pos += x_speed;
 
-			try {
-				// Stoppen des Threads für in Klammern angegebene Millisekunden
-				Thread.sleep(20);
-			} catch (InterruptedException ex) {
-				// do nothing
-			}
+      // Neuzeichnen des Applets
+      repaint();
 
-			// Zurücksetzen der ThreadPriority auf Maximalwert
-			Thread.currentThread().setPriority(Thread.MAX_PRIORITY);
-		}
-	}
+      try {
+	// Stoppen des Threads für in Klammern angegebene Millisekunden
+	Thread.sleep(20);
+      } catch (InterruptedException ex) {
+	// do nothing
+      }
 
-	/**
-	 * Update - Methode, Realisierung der Doppelpufferung zur Reduzierung des
-	 * Bildschirmflackerns
-	 */
-	public void update(Graphics g) {
-		// Initialisierung des DoubleBuffers
-		if (dbImage == null) {
-			dbImage = createImage(this.getSize().width, this.getSize().height);
-			dbg = dbImage.getGraphics();
-		}
+      // Zurücksetzen der ThreadPriority auf Maximalwert
+      Thread.currentThread().setPriority(Thread.MAX_PRIORITY);
+    }
+  }
 
-		// Bildschirm im Hintergrund löschen
-		dbg.setColor(getBackground());
-		dbg.fillRect(0, 0, this.getSize().width, this.getSize().height);
+  /**
+   * Update - Methode, Realisierung der Doppelpufferung zur Reduzierung des Bildschirmflackerns
+   */
+  public void update(Graphics g) {
+    // Initialisierung des DoubleBuffers
+    if (dbImage == null) {
+      dbImage = createImage(this.getSize().width, this.getSize().height);
+      dbg = dbImage.getGraphics();
+    }
 
-		// Auf gelöschtem Hintergrund Vordergrund zeichnen
-		dbg.setColor(getForeground());
-		paint(dbg);
+    // Bildschirm im Hintergrund löschen
+    dbg.setColor(getBackground());
+    dbg.fillRect(0, 0, this.getSize().width, this.getSize().height);
 
-		// Nun fertig gezeichnetes Bild Offscreen auf dem richtigen Bildschirm
-		// anzeigen
-		g.drawImage(dbImage, 0, 0, this);
-	}
+    // Auf gelöschtem Hintergrund Vordergrund zeichnen
+    dbg.setColor(getForeground());
+    paint(dbg);
 
-	public void paint(Graphics g) {
-		g.setColor(Color.red);
+    // Nun fertig gezeichnetes Bild Offscreen auf dem richtigen Bildschirm
+    // anzeigen
+    g.drawImage(dbImage, 0, 0, this);
+  }
 
-		g.fillOval(x_pos - radius, y_pos - radius, 2 * radius, 2 * radius);
-	}
+  public void paint(Graphics g) {
+    g.setColor(Color.red);
+
+    g.fillOval(x_pos - radius, y_pos - radius, 2 * radius, 2 * radius);
+  }
 }
